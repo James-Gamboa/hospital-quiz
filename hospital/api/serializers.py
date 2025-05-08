@@ -1,6 +1,7 @@
 from .models import Paciente, Doctor, Especialidad, DoctorEspecialidad, Cita
 from rest_framework import serializers  # type: ignore
 from datetime import date
+from django.contrib.auth.models import User, Group
 
 
 class PacienteSerializer(serializers.ModelSerializer):
@@ -113,3 +114,21 @@ class CitaSerializer(serializers.ModelSerializer):
                 "El ID del doctor debe ser un número positivo.")
 
         return data
+
+
+class UserRegistrationSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, min_length=8)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password']
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password']
+        )
+        cliente_group = Group.objects.get(name='cliente')
+        user.groups.add(cliente_group)
+        return user

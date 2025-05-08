@@ -1,0 +1,47 @@
+Tema: Registro de nuevos usuarios desde un cliente externo
+
+1. ¿Qué nueva vista deben crear en su API para permitir que un usuario se registre desde el frontend?
+Se necesita una página o punto de acceso donde cualquier persona pueda dejar sus datos para crear una cuenta, como si fuera un formulario de registro en una web.
+
+2. ¿Qué modelo o serializers deben reutilizar o crear para permitir la creación segura de un nuevo usuario?
+Se debe usar  un tipo de  de formulario que recoge los datos básicos (nombre, correo y contraseña) y se asegura de que todo esté correcto antes de guardar al usuario.
+
+3. ¿Cómo deben encriptar correctamente la contraseña del nuevo usuario al guardarlo?
+La contraseña que escribe el usuario nunca se guarda tal cual. El sistema la transforma en un código secreto digamos  que nadie puede leer, ni siquiera los admin.
+
+4. ¿Qué permisos debe tener esta vista para que un usuario no autenticado pueda registrarse?
+Cualquiera puede acceder a esta parte del sistema, incluso si no tiene cuenta todavía. Así, todos pueden registrarse sin problemas.
+
+5. ¿Cómo agregar un grupo automáticamente al crear un usuario (por ejemplo, asignar el rol cliente)?
+Cuando alguien se registra, el sistema lo pone automáticamente en el grupo de "clientes", para que tenga los permisos básicos y pueda usar la aplicación.
+
+6. ¿Qué validaciones mínimas deberían agregar al registro (email único, longitud mínima de contraseña, etc)?
+Se pide que la contraseña sea lo suficientemente larga para ser segura y que el correo no esté repetido, así evitamos cuentas duplicadas y problemas de seguridad.
+
+7. ¿Qué pruebas deben hacer desde Postman para confirmar que el usuario se está creando correctamente?
+Puedes probar registrando un usuario nuevo y ver si el sistema responde con un mensaje de éxito. También es bueno intentar registrarse con el mismo correo o una contraseña muy corta, para comprobar que el sistema avisa si hay algún error.
+
+
+
+* El endpoint funcional que permita registrar un nuevo usuario desde un cliente externo.
+http://localhost:8000/api/register/
+
+* Un resumen breve (1 página máximo) explicando las decisiones técnicas que tomaron
+para implementar el registro.
+
+Para permitir que cualquier persona se registre en el sistema, 
+creamos un endpoint donde los usuarios 
+pueden enviar sus datos básicos. Usamos un formulario digital que valida la información y 
+guarda la contraseña de forma segura, sin que nadie pueda verla. Además, cada nuevo usuario 
+se agrega automáticamente al grupo de clientes para que tenga los permisos necesarios desde el inicio. 
+El registro está abierto para todos, sin necesidad de estar autenticado, y se revisa que la contraseña sea 
+segura y el correo no esté repetido. Probamos el registro usando Postman para asegurarnos de que funciona 
+correctamente y muestra mensajes claros si hay algún error.
+
+
+Fuentes consultadas para la investigación:
+
+https://www.django-rest-framework.org/api-guide/serializers/#saving-instances
+https://learndjango.com/tutorials/django-permissions-tutorial
+https://medium.com/django-unleashed/securing-django-rest-apis-with-jwt-authentication-using-simple-jwt-a-step-by-step-guide-28efa84666fe
+https://vuyisile.com/how-to-use-postman-to-authenticate-to-django-rest-framework/
