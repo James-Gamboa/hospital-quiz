@@ -29,5 +29,5 @@ urlpatterns = [
     path('citas/', CitaListCreateView.as_view(), name='cita-list-create'),
     path('citas/<int:pk>/', CitaDetailView.as_view(), name='cita-detail'),
 
-    path('register/', UserRegistrationView.as_view(), name='user_registration'),
+    path('registro/', UserRegistrationView.as_view(), name='user_registration'),
 ]
